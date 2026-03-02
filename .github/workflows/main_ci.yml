@@ -1,0 +1,41 @@
+name: Django CI with Selenium
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install Firefox and Geckodriver
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y firefox
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.34.0/geckodriver-v0.34.0-linux64.tar.gz
+        tar -xzf geckodriver-v0.34.0-linux64.tar.gz
+        sudo mv geckodriver /usr/local/bin/
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install django selenium
+
+    - name: Run Security Tests
+      env:
+        # Utilitzem el teu secret personalitzat
+        SECRET_KEY: ${{ secrets.DJANGO_ERIC }}
+        MOZ_HEADLESS: 1
+      run: |
+        python manage.py test core.tests_selenium
