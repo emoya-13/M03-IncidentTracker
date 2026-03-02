@@ -36,7 +36,7 @@ jobs:
       env:
         SECRET_KEY: ${{ secrets.DJANGO_ERIC }}
         MOZ_HEADLESS: 1
-        # Aquesta línia és la clau: diu a Python que miri a la carpeta arrel
-        PYTHONPATH: . 
+        PYTHONPATH: ${{ github.workspace }}
+      # Canviem la forma de cridar el test per assegurar la descoberta del mòdul
       run: |
-        python manage.py test core.tests_selenium
+        python manage.py test core
