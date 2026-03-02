@@ -34,8 +34,9 @@ jobs:
 
     - name: Run Security Tests
       env:
-        # Utilitzem el teu secret personalitzat
         SECRET_KEY: ${{ secrets.DJANGO_ERIC }}
         MOZ_HEADLESS: 1
+        # Aquesta línia és la clau: diu a Python que miri a la carpeta arrel
+        PYTHONPATH: . 
       run: |
         python manage.py test core.tests_selenium
