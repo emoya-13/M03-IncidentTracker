@@ -37,6 +37,6 @@ jobs:
         SECRET_KEY: ${{ secrets.DJANGO_ERIC }}
         MOZ_HEADLESS: 1
         PYTHONPATH: .
-      # Executem el fitxer de tests directament per la seva ruta
       run: |
+        # Forçat de descoberta de tests a la carpeta core
         python manage.py test core.tests_selenium
