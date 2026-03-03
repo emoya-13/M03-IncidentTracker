@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        # Afegim psycopg2-binary per evitar l'error de Postgres
+        # Instal·lem psycopg2-binary per evitar l'error de PostgreSQL
         pip install django selenium psycopg2-binary
 
     - name: Run Security Tests
@@ -39,7 +39,4 @@ jobs:
         MOZ_HEADLESS: 1
         PYTHONPATH: .
       run: |
-        # Fem servir un truc de Django: si no hi ha DB configurada al núvol, 
-        # forcem SQLite per al test mitjançant paràmetres de settings si cal, 
-        # però amb el psycopg2-binary instal·lat ja hauria de carregar el mòdul.
         python manage.py test core.tests_selenium
