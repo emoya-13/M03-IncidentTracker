@@ -30,15 +30,14 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        # Instal·lem psycopg2-binary per callar l'error de Postgres
-        pip install django selenium psycopg2-binary
+        pip install django selenium
 
     - name: Run Security Tests
       env:
+        # Fem servir el teu secret configurat a GitHub
         SECRET_KEY: ${{ secrets.DJANGO_ERIC }}
         MOZ_HEADLESS: 1
         PYTHONPATH: .
       run: |
-        # Creem un fitxer de settings temporal només per al test que usi SQLite
-        # Això evita haver de configurar un servidor Postgres a GitHub
-        python manage.py test core.tests_selenium --settings=M03_IncidentTracker.settings
+        # Executem el test específic de Selenium
+        python manage.py test core.tests_selenium
